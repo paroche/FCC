@@ -1,0 +1,258 @@
+<!-- <!DOCTYPE html> -->
+<!-- Submission Version -->
+<html lang='en'>
+  <!--
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	-->
+<head>
+  <meta charset='UTF-8'>
+  <title>Eratosthenes of Cyrene</title>
+  <!--<link rel='stylesheet' href='eratosthenes-7.css'>-->
+  <style>
+	body {
+      overflow-x: hidden; /* w/out this have slide bar at bottom. Same happened w/ Green-Machine page" */
+}
+#main {
+    background-color: lightgray;
+    border: 1px solid gray; /*wout this top margin doesn't turn lightgray?*/
+}
+#main2 {
+  /*--main2-background: hsl(178, 37%, 80%); /* = #B9DFDE Blue-Greenish*/
+  --main2-background: hsl(178, 37%, 81%); /* =#BDE0DF a bit lighter*/
+  --figure-background: hsl(178, 37%, 81%); /*Same for now*/
+  /*--main2-color: hsl(180, 100%, 20%); /* =  #006666 Greener, more saturated, darker Blue-Green. w/ #BDE0DF is 4.82:1 contrast*/
+  --main2-color: hsl(180, 100%, 14%); /* = #004949 Darker B-G. w #BDE0DF gives 7.27:1 contrast */
+
+  margin: 1.0%;
+  padding: 17px 8% 20px 8%;
+  background-color: var(--main2-background);
+  color: var(--main2-color);
+  /*border: 1px solid black;
+  border-radius: 8px;*/
+}
+h1, h2 {
+  text-align: center;
+}
+
+#img-div {
+  margin: 35px 0 10px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /*border: 1px solid black; /* */
+}
+.img-with-caption {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 0 0 10px 0;
+  /*border-radius: 8px;*/
+  /*background-color: var(--figure-background);*/
+  /*border: 1px solid red;*/
+}
+#main-img {
+  margin: 0 5% 10px 1%;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.header-images {
+  max-height: 150px;
+  /*border: 1px solid var(--main-background);/*Depending on margins & padding,  w/out this Sieve wraps?*/
+  /*border: 1px solid gray;*/
+}
+.captions {
+  width: 100%;
+  text-align: center;
+}
+
+#tribute-info-and-for-more-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /*border: 1px solid blue;*/
+}
+#tribute-info {
+  width: 65%;
+  margin: 5px 0 20px 0;
+}
+
+#for-more-info-section {
+  width: 30%;
+  margin: 80px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative; left: 5%;
+  /*border: 1px solid blue;
+  border-radius: 8px;*/
+}
+#more-info-image {
+  format: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin: 5px 0 21px 0;
+  opacity: .8;
+}
+#more-info-header {
+  display: flex;
+  font-size: 25px;
+  margin: 0 0 15px 8%;
+}
+.more-info-links {
+  display: flex;
+  margin: 0 0 10px 13%;
+  /*border: 1px solid purple;*/
+}
+
+  @media(min-width: 1400px) {
+    #main2 {
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+  }
+  @media(max-width: 860px) {
+    .img-with-caption {
+      margin-right: 0;
+    }
+    #tribute-info {
+      width: 96%;
+      margin: 10px 2% 20px 2%;
+    }
+    #tribute-info-and-for-more-container {
+      flex-direction: column;
+    }
+    #for-more-info-section {
+      width: 100%;
+      margin: 15px 5% 15px 0;
+      position: relative;
+      left: 0;
+      flex-direction: column-reverse; /* Put picture at end */
+      /*border: solid 1px red;*/
+    }
+    #more-info-header {
+      font-size: 20px;
+    }
+    #more-info-image {
+      max-width: 50%;
+      height: auto;
+      margin: auto;
+      margin-top: 22px;
+      /*padding: 2px; /*temp*/
+      /*border: 1px solid green; */
+    }
+  }
+  @media(max-width: 580px) {
+    #main2 {
+      margin: 0.6%;
+      padding: 17px 2% 20px 2%;
+    }
+  }
+  @media(max-width: 380px) {
+    #more-info-image {
+      max-width: 65%;
+    }
+  }
+
+#ruler {
+  margin: 0 0 0 0;
+  background-color: orange;
+  height: 25px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(14, 100px);
+  border: 1px solid yellow;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div id='main'>
+    <div id='main2'>
+      <header id='title'>
+        <h1>Eratosthenes of Cyrene</h1>
+        <h2>Geographer, Astronomer, Mathematician, Poet, Writer, Librarian</h2>
+      </header>
+
+      <div id='img-div'>
+
+         <figure id='bust' id='main-img' class='img-with-caption'>
+           <img src='https://empoweryourknowledgeandhappytrivia.files.wordpress.com/2017/01/eratosthenes-statue.jpg' id='image' class='header-images' alt='Bust of Eratosthenes'/>
+          <figcaption id='img-caption' class='captions'>Eratosthenes</figcaption>
+        </figure>
+
+        <figure id='circumference' class='img-with-caption'>
+          <a href='http://www.eaae-astronomy.org/eratosthenes/eratosthenes-99456' alt='Calculated Circumference of the Earth' target='_blank'>
+            <img src='http://www.eaae-astronomy.org/eratosthenes/images/project/erastosthenesexperiment.jpg' id='experiment' class='header-images' alt='Image of Earth Circumference Experiment'/>
+            <figcaption class='captions'>Circumference of the Earth</figcaption>
+          </a>
+        </figure>
+
+        <figure id='geography' class='img-with-caption'>
+          <a href='http://www.eaae-astronomy.org/eratosthenes/images/project/eratostenesworldmap.jpg' target='_blank' alt='Map of the Ancient World (Larger Image)'>
+            <img src='http://www.eaae-astronomy.org/eratosthenes/images/project/eratostenesworldmap.jpg' id='map' class='header-images' alt='Map of the Ancient World'/>
+          </a>
+          <figcaption class='captions'>Mathematical Geography</figcaption>
+        </figure>
+
+        <figure id='sieve' class='img-with-caption'>
+          <a href='https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes' alt='Wikipedia article on Sieve of Eratosthenes' target='_blank'>
+            <img src='http://neofronteras.com/wp-content/photos/criba_eratostenes.jpg' class='header-images' alt='Number Grid Showing Sieve'/>
+            <figcaption class='captions'>Sieve of Erathosthenes</figcaption>
+          </a>
+        </figure>
+
+      </div> <!-- img-div -->
+
+      <div id='tribute-info-and-for-more-container'>
+        <article id='tribute-info'>
+          <p>Eratosthenes was born around 276 BCE in the city of Cyrene (in present-day Libya), part of the Greek-speaking Ptolemaic Kingdom centered in Egypt. As a young man he went to Athens where he studied with prominent teachers in various philosophical schools, and began to write works that would make him famous, including poetry that was highly regarded, a mathematically precise chronology of history, and a mathematical discussion of Plato's philosophy. His work brought him to the attention of pharaoh Ptolemy III Euergetes, who invited him to become a librarian at the Library of Alexandria and to tutor his children. Eratosthenes accepted the invitation and moved to Alexandria, where he spent the rest of his life. There he continued working in many areas, including mathematics, astronomy, geography, history, philosophy, poetry, grammar, and literary criticism. In five years he became Chief Librarian. He also became friends with the great mathematician, physicist, engineer, and inventor Archimedes of Syracuse, who dedicated two of his works to him.</p>
+          <p>He is most famous for his calculation of the circumference of the Earth. He had learned that in the city of Syene (modern day Aswan), which was believed to be due south of Alexandria, it had been reported that on the Summer solstice at noon the Sun was straight overhead, such that its rays only illuminated the bottom, but not the sides, of a deep well. He also had an estimate of the distance from Alexandria to Syene. To this he added the length of a shadow cast in Alexandria at the same date and time, relative to the height of the object casting the shadow (perhaps cast by the Great Obelisk in Alexandria, or of a sundial <a href='https://en.wikipedia.org/wiki/Gnomon' target='_blank'>gnomon</a>). From this information, and the assumptions that the Earth was a perfect sphere and that the Sun was very far away, he calculated a remarkably accurate value for the Earth's circumference. While he may not have been the first to have made this type of calculation, he is the first whose methods have been reported, and the first known to have achieved such accuracy (though he may have benefited from some of the errors in his data canceling each other out).</p>
+          <p>A partial list of his accomplishments</p>
+          <ul>
+            <li><a href='http://www.eaae-astronomy.org/eratosthenes/eratosthenes-99456' target='_blank'>Accurately calculated the circumference of the Earth</a></li>
+            <li>Founded mathematical geography, creating maps with north-south and east-west gridlines, including a comprehensive map of the known world</li>
+            <li>Created a simple efficient method of calculating prime numbers, still known as "<a href='https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes' target='_blank'>The Sieve of Eratosthenes</a>"</li>
+            <li>Accurately calculated the tilt of the Earth</li>
+            <li>Calculated the distances from the Earth to the Moon and the Earth to the Sun (though his methods are not known and their accuracy may not have been good)</li>
+            <li>Discovered that a year was a little more than 365 days, and devised a 365 day calendar with a 366 day year every four years</li>
+            <li>Explained the flooding of the Nile</li>
+            <li>Invented the armillary sphere, a device used to determine the positions of the celestial bodies</li>
+            <li>Contributed significantly to the theory of musical scales</li>
+            <li>Wrote works on many topics, though now only fragments remain</li>
+            <li>Promoted the liberal view that non-Greek people should not be written off as "barbarians", but instead each person should be judged on their own merits</li>
+          </ul>
+          </p>As he aged, Eratosthenes developed a condition that led to him becoming blind. It is believed that rather than no longer being able to continue his work, he chose to stop eating and died of starvation circa 192 BCE at the age of 82.
+        </article>
+
+        <div id='for-more-info-section'>
+
+          <img src='http://totallyhistory.com/wp-content/uploads/2013/12/Eratosthenes.jpg' alt='Profile Drawing of Eratosthenes' id='more-info-image'/>
+
+          <div id='more-info-links-section'>
+
+            <h2 id='more-info-header'>For more information:</h2>
+            <div class='more-information'>
+              <a href='https://en.wikipedia.org/wiki/Eratosthenes' target='_blank' alt='Eratosthenes Wikipedia Page' class='more-info-links' id='tribute-link'>Eratosthenes at Wikipedia</a>
+              <a href='https://www.khanacademy.org/partner-content/big-history-project/solar-system-and-earth/knowing-solar-system-earth/a/eratosthenes-of-cyrene' target='_blank' alt="Eratosthenes at Khan Academy" class='more-info-links' id='Khan-Academy-link'>Eratosthenes at Khan Academy</a>
+              <a href='https://www.britannica.com/biography/Eratosthenes' target='_blank' alt='Eratosthenes at Britannica.com' class='more-info-links' id='Britannica-link'>Eratosthenes at Britannica.com</a>
+              <a href='https://en.wikipedia.org/wiki/History_of_geodesy' target='_blank' alt='History of geodesy' class='more-info-links' id='Geodesy-link'>History of Measuring the Earth</a>
+              <a href='http://www.academia.edu/27928173/How_the_Ancient_Egyptians_had_Calculated_the_Earths_Circumference_between_3750-1500_BC_a_revision_of_the_method_used_by_Eratosthenes' target='_blank' alt="Revisionist View on Earth's Diameter Measure" class='more-info-links'>Revisionist Take on Earth's Diameter Measurement</a>
+            </div> <!-- more-information -->
+
+          </div> <!-- more-info-links -->
+        </div> <!-- for-more-info-section -->
+      </div> <!-- tribute-info-and-for-more-container -->
+
+    </div> <!-- main2 (which I wanted to call 'main') -->
+  </div> <!-- main (which I wanted to call 'container') -->
+
+</body>
+</html>
