@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Submission version 2019-01-19 -->
+<!-- Submission version 2019-01-21 -->
 
 <script  src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
 
@@ -17,8 +17,7 @@ body {
   --test-border-width: 0px;
   --half-bold: 540; /* doesn't work for default font-type -- just goes to normal or bold, whichever is closer */
   --max-container-width: 1400px;
-  --header-height: 65px; /* For nav-links and popups */
-  --header-height: 100px; /* to allow to move title down */
+  --header-height: 110px;
   --neg-header-height: calc(-1 * var(--header-height));
   background: linear-gradient(to bottom right, #ECFFEC, #DDFFDD);
   /* attempts to solve over-wide slide-bar problem */
@@ -63,7 +62,7 @@ body {
   z-index: 5;
 }
 #header-company {
-  margin: 18px 0 10px 4%;
+  margin: 15px 0 10px 4%;
   display: flex;
   flex-direction: row; /* default */
   justify-content: center;
@@ -92,6 +91,7 @@ body {
 #company-text {
   margin: 0 0 0 3px;
   font-size: 48px; /* */
+  font-size: 4vw; /* */
   color: green;
   color: #00AA00;
   border: var(--test-border-width) solid;
@@ -468,26 +468,28 @@ video-caption-footer:hover {
   color: #001100;
   text-decoration: none;
   position: relative; /* relative (or absolute) position here, or in container popup-box, made buttons show through popup background, until gave popup-overlay z-index: 1 */
-  transition: all 3s; /* doesn't work */
 }
 .popup-button:hover {
   color: #00AA00;
 }
-.popup-button:before {
+.popup-button::before {
   position: absolute;
   z-index: 1; 
   z-index: 0; /* if not overlaying button */
   top: var(--before-top);
   text-align: center;
   border-radius: 10%;
-  /*transition: all 12.5s; /* not having an effect */
+  content: ''; /* */
+  opacity: 0; /* Seem to need both content and opacity set to get transition? Weird */
+  /*transition: all 1s ; /* just for when stop hovering */
 }
-.popup-button:hover:before {
+.popup-button:hover::before {
   content: attr(data-desc);
+  opacity: 1;
   height: var(--before-height);
-  background-color: #cec;
+  background-color: #DFD;
   color: #005500;
-  /*transition: all 2s; /* not having an effect */
+  transition: all .8s linear .5s; /*  */
 }
 
 .popup-overlay {
@@ -561,6 +563,9 @@ video-caption-footer:hover {
     --header-height: 120px; /* for popups due to expanded header from #nav-bar change below */
     --neg-header-height: calc(-1 * var(--header-height));
   }
+  #company-text {
+    font-size: 5.5vw; 
+  }
   #nav-bar {
     margin-top: 3px;
     flex-direction: column;
@@ -598,9 +603,13 @@ video-caption-footer:hover {
   }
 }
 @media(max-width: 840px) {
-#company-text {
-  margin: 0 0 0 0;
-  font-size: 40px; /* */
+  #company-text {
+    margin: 0 0 0 0;
+    /*font-size: 45px; /* */
+    /*font-size: calc(7vw - 5px); /* Testing */
+  }
+  #nav-bar {
+  margin: 0px 1% 0 5px;
   }
   .list-with-picture {
     flex-direction: column;
@@ -625,16 +634,20 @@ video-caption-footer:hover {
     width: 65%;
   }
 }
+@media screen and (max-width: 750) {
+  #company-text {
+  /*font-size: 40px; /* */
+  }
+}
 @media screen and (max-width: 700px){
   #company-text {
-  font-size: 32px; /* */
+  /*font-size: 38px; /* */
   }
   .popup-box{}
   .popup{
     width: 70%;
   }
   .popup-button:before {
-
   }
   .popup-button:hover:before {
     /*content: ''; /* */
@@ -747,6 +760,7 @@ video-caption-footer:hover {
     color: red; /* this doesn't seem to happen */
   }
 }
+
     </style>
   </head>
 
